@@ -7,11 +7,13 @@ public abstract class AbstractPrinter {
 
     protected CalendarMonth calendarMonth;
     protected PrintStream output;
-    Colors color;
 
+    protected String textColor;
 
-    String textFormat;
-
+    protected String defaultColor;
+    protected String weekendColor;
+    protected String fromOtherMonthColor;
+    protected String currentDayColor;
 
 
     public AbstractPrinter(CalendarMonth calendarMonth, PrintStream output) {
@@ -25,7 +27,7 @@ public abstract class AbstractPrinter {
         printTitle();
         printMonth();
         printWeekdayNames();
-        printDayNumbers();
+        printMonthDays();
         endPrint();
     }
 
@@ -38,60 +40,61 @@ public abstract class AbstractPrinter {
         newLine();
 
         for (CalendarDay day : calendarMonth.getWeeksList().get(0).getDaysList()) {
-            if (day.isWeekend()) {
-                textFormat = color.getWeekendColor();
-            } else {
-                textFormat = color.getDefaultColor();
-            }
+            textColor = day.isWeekend() ? getWeekendColor() : getDefaultColor();
 
             printWeekdayName(day);
         }
 
-        newLine();
+        endWeek();
     }
 
 
-
-
-
-    protected void printDayNumbers() {
+    protected void printMonthDays() {
         for (CalendarWeek week : calendarMonth.getWeeksList()) {
             setDefaultColorFormat();
 
-            for (CalendarDay day : week.getDaysList()) {
-                setDefaultColorFormat();
-
-                if (day.isSameDate(calendarMonth.getCurrentDay(), calendarMonth.getCurrentMonth())) {
-                    textFormat = color.getCurrentDayColor();
-                }
-
-                if (day.isWeekend()) {
-                    textFormat = color.getWeekendColor();
-                }
-
-                if (!day.isInMonth(calendarMonth.getCurrentMonth())) {
-                    textFormat = color.getFromOtherMonthColor();
-                }
-
-                printDayNumber(day);
-            }
+            printWeek(week);
 
             endWeek();
         }
     }
 
-    protected void setDefaultColorFormat(){
-        textFormat = color.getDefaultColor();
-      //  backgroundFormat = color.getDefaultBackgroundFormat();
+    private void printWeek(CalendarWeek week) {
+        for (CalendarDay day : week.getDaysList()) {
+            printDay(day);
+        }
+    }
+
+    private void printDay(CalendarDay day) {
+        setDayColor(day);
+
+        printDayNumber(day);
+    }
+
+    private void setDayColor(CalendarDay day) {
+        setDefaultColorFormat();
+
+        if (day.isSameDate(calendarMonth.getCurrentDay(), calendarMonth.getCurrentMonth())) {
+            textColor = getCurrentDayColor();
+        }
+
+        if (day.isWeekend()) {
+            textColor = getWeekendColor();
+        }
+
+        if (!day.isInMonth(calendarMonth.getCurrentMonth())) {
+            textColor = getFromOtherMonthColor();
+        }
+    }
+
+    protected void setDefaultColorFormat() {
+        textColor = getDefaultColor();
+
 
     }
 
 
-
-
     protected abstract void printDayNumber(CalendarDay day);
-
-
 
 
     protected abstract void printWeekdayName(CalendarDay day);
@@ -104,6 +107,22 @@ public abstract class AbstractPrinter {
     protected abstract void newLine();
 
     protected abstract void endWeek();
+
+    public  String getDefaultColor() {
+        return defaultColor;
+    }
+
+    public String getWeekendColor() {
+        return weekendColor;
+    }
+
+    public String getFromOtherMonthColor() {
+        return fromOtherMonthColor;
+    }
+
+    public String getCurrentDayColor() {
+        return currentDayColor;
+    }
 
 
 }

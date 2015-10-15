@@ -8,9 +8,7 @@ public class StartPrint {
 
         CalendarMonth month = new CalendarMonth();
 
-        PrintStream printStream = new PrintStream(System.out);
-
-        AbstractPrinter printer = new HTMLCodePrinter(month, printStream);
+        AbstractPrinter printer = new HTMLCodePrinter(month, new PrintStream(System.out));
 
         printer.printCalendar();
 

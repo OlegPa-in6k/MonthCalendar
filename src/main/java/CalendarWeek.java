@@ -9,9 +9,12 @@ import java.util.List;
 public class CalendarWeek {
     public static final DayOfWeek FIRST_DAY_OF_WEEK = DayOfWeek.MONDAY;
     private LocalDate weekCalendar;
-    public CalendarWeek(LocalDate weekCalendar){
-            this.weekCalendar = weekCalendar;
-            fillOneWeek(weekCalendar);
+    private List<CalendarDay> daysList = new ArrayList<CalendarDay>();
+
+
+    public CalendarWeek(LocalDate firstDayOfWeek) {
+        this.weekCalendar = firstDayOfWeek;
+        fillWeek(firstDayOfWeek);
     }
 
 
@@ -19,16 +22,14 @@ public class CalendarWeek {
         return daysList;
     }
 
-    private List<CalendarDay> daysList = new ArrayList<CalendarDay>();
 
-    public void fillOneWeek(LocalDate weekCalendar){
-       do{
-           daysList.add(new CalendarDay(weekCalendar));
-           weekCalendar = weekCalendar.plusDays(1);
-       } while (!weekCalendar.getDayOfWeek().equals(FIRST_DAY_OF_WEEK) );
+
+    public void fillWeek(LocalDate weekCalendar) {
+        do {
+            daysList.add(new CalendarDay(weekCalendar));
+            weekCalendar = weekCalendar.plusDays(1);
+        } while (!weekCalendar.getDayOfWeek().equals(FIRST_DAY_OF_WEEK));
     }
-
-
 
 
 }

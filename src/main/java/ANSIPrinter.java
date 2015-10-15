@@ -7,11 +7,16 @@ import java.util.Locale;
 public class ANSIPrinter extends AbstractPrinter {
 
 
-    public static final String CODING_IDENTIFICATION = "ANSI";
+    private void setColors() {
+        defaultColor = "\u001b[0m";
+        weekendColor = "\u001b[31m";
+        fromOtherMonthColor = "\u001b[34m";
+        currentDayColor = "\u001B[32m";
+    }
 
     public ANSIPrinter(CalendarMonth month, PrintStream output) {
         super(month, output);
-        color = new Colors(CODING_IDENTIFICATION);
+        setColors();
     }
 
     @Override
@@ -25,15 +30,10 @@ public class ANSIPrinter extends AbstractPrinter {
     }
 
 
-
-
-
-
-
     @Override
     protected void printDayNumber(CalendarDay day) {
         output.printf("%s%3d %s",
-                 textFormat, day.getDayOfMonth(), color.getDefaultColor());
+                textColor, day.getDayOfMonth(), getDefaultColor());
     }
 
 
@@ -41,7 +41,7 @@ public class ANSIPrinter extends AbstractPrinter {
     @Override
     protected void printWeekdayName(CalendarDay day) {
         output.printf("%s%s ",
-                textFormat, day.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.CANADA));
+                textColor, day.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.CANADA));
     }
 
     @Override

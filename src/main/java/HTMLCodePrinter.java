@@ -4,10 +4,19 @@ import java.util.Locale;/**
  * Created by Oleg on 14.10.2015.
  */
 public class HTMLCodePrinter extends AbstractPrinter{
-    public static final String HTML_CODE = "HTML";
+
+
+    private void seColors(){
+        defaultColor = "black";
+        weekendColor = "red";
+        fromOtherMonthColor = "blue";
+        currentDayColor = "Green";
+
+    }
     public HTMLCodePrinter(CalendarMonth month, PrintStream output) {
         super(month, output);
-        color = new Colors(HTML_CODE);
+        seColors();
+
     }
 
     @Override
@@ -33,14 +42,14 @@ public class HTMLCodePrinter extends AbstractPrinter{
     @Override
     protected void printDayNumber(CalendarDay day) {
         output.printf("<td align=\"right\"  style=\"border-radius:5px\"><font color=\"%s\">%s </font></td>\n",
-                 textFormat, day.getDayOfMonth());
+                textColor, day.getDayOfMonth());
     }
 
 
     @Override
     protected void printWeekdayName(CalendarDay day) {
         output.printf("<td align=\"right\"><font color=\"%s\">%s</font></td>\n",
-                textFormat, day.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.CANADA));
+                textColor, day.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.CANADA));
     }
 
     @Override

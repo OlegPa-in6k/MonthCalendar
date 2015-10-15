@@ -11,7 +11,7 @@ public class CalendarDay {
     private java.time.Month monthValue;
 
 
-    public CalendarDay(LocalDate workCalendar){
+    public CalendarDay(LocalDate workCalendar) {
         this.dayOfMonth = workCalendar.getDayOfMonth();
         this.dayOfWeek = workCalendar.getDayOfWeek();
         this.monthValue = workCalendar.getMonth();
@@ -29,17 +29,17 @@ public class CalendarDay {
         return dayOfWeek;
     }
 
-    public boolean isWeekend(){
+    public boolean isWeekend() {
         return getDayOfWeek().equals(DayOfWeek.SUNDAY) || getDayOfWeek().equals(DayOfWeek.SATURDAY);
     }
-    public boolean isInMonth(java.time.Month monthValue){
-        return getMonthValue() == monthValue;
+
+    public boolean isInMonth(java.time.Month monthValue) {
+        return getMonthValue().equals(monthValue);
     }
 
-    public boolean isSameDate(int dayOfMonth, java.time.Month monthValue ) {
-        return (getDayOfMonth() == dayOfMonth )&& (getMonthValue() == monthValue);
+    public boolean isSameDate(int dayOfMonth, java.time.Month monthValue) {
+        return (getDayOfMonth() == dayOfMonth) && (getMonthValue() == monthValue);
     }
-
 
 
 }

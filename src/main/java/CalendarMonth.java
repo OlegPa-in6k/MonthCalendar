@@ -12,21 +12,7 @@ public class CalendarMonth {
     private java.time.Month currentMonth;
     private int currentYear;
 
-
-    private List<CalendarWeek> weeksList = new ArrayList<CalendarWeek>();
-
-    public CalendarMonth(){
-        settodayDayAtrributes();
-        moveOnTheFirstDayOfMonth();
-        fillOneMonth();
-    }
-
-
-
-
-
     private LocalDate localDate = LocalDate.now();
-
     private LocalDate workCalendar;
 
     public List<CalendarWeek> getWeeksList() {
@@ -34,8 +20,16 @@ public class CalendarMonth {
     }
 
 
+    private List<CalendarWeek> weeksList = new ArrayList<CalendarWeek>();
 
-    private void fillOneMonth(){
+    public CalendarMonth() {
+        setTodayDayAtrributes();
+        moveOnTheFirstDayOfMonth();
+        fillOneMonth();
+    }
+
+
+    private void fillOneMonth() {
         do {
             weeksList.add(new CalendarWeek(workCalendar));
             workCalendar = workCalendar.plusWeeks(1);
@@ -44,20 +38,14 @@ public class CalendarMonth {
     }
 
 
+    protected LocalDate moveOnTheFirstDayOfMonth() {
+        workCalendar = localDate.minusDays(localDate.getDayOfMonth() - 1);
 
-
-
-
-
-    protected LocalDate moveOnTheFirstDayOfMonth(){
-        workCalendar = localDate.minusDays(localDate.getDayOfMonth()-1);
-
-        while(!isFirstDayOfWeek()){
-           workCalendar= workCalendar.minusDays(1);
+        while (!isFirstDayOfWeek()) {
+            workCalendar = workCalendar.minusDays(1);
         }
         return workCalendar;
     }
-
 
 
     private boolean isFirstDayOfWeek() {
@@ -65,8 +53,7 @@ public class CalendarMonth {
     }
 
 
-
-    public void settodayDayAtrributes(){
+    public void setTodayDayAtrributes() {
         setCurrentDay();
         setCurrentMonth();
         setCurrentYear();
@@ -77,7 +64,7 @@ public class CalendarMonth {
         return currentDay;
     }
 
-    public void setCurrentDay( ) {
+    public void setCurrentDay() {
         this.currentDay = localDate.getDayOfMonth();
     }
 
@@ -96,9 +83,6 @@ public class CalendarMonth {
     public void setCurrentYear() {
         this.currentYear = localDate.getYear();
     }
-
-
-
 
 
 }
